@@ -3,10 +3,11 @@ const Mock = require('mockjs')
 const port = 2000
 const app = express()
 app.all('*', function(req, res, next) {  
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");  
+    res.header("Access-Control-Allow-Origin", req.header('origin'));  
 	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");  
-	res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With"); 
-	res.header("Access-Control-Allow-Credentials","true")
+	res.header("Access-Control-Allow-Headers", "Content-Type,Token,Content-Length, Authorization, Accept,X-Requested-With"); 
+	res.header("Access-Control-Allow-Credentials",true)
+	res.header('Content-Type', 'application/json;charset=utf-8')
 	next()
 })
 app.post('/auth/api/login',(req,res)=>{  
@@ -163,11 +164,6 @@ app.post('/api/user/list',(req,res)=>{
 	})
 	res.send(data)
 })
-/*
-res.header("Access-Control-Allow-Origin", "http://localhost:8080");  
-res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");  
-res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");  
-*/
 app.listen(port,()=>{
 	console.log('server at port：' + port)
 })
